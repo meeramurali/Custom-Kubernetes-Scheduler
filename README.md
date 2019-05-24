@@ -4,6 +4,8 @@
 1. chmod +x DIND_cluster/dind-cluster-v1.13.sh
 2. sudo DIND_cluster/./dind-cluster-v1.13.sh up
 
+<img src="https://github.com/meeramurali/Custom-Kubernetes-Scheduler/blob/master/images/1.png" height="60"/>
+
 See [here](https://www.mirantis.com/blog/multi-kubernetes-kdc-quick-and-dirty-guide/) for detailed instructions
 
 ## Setting up Prometheus with node-exporter On Kubernetes Cluster: 
@@ -15,3 +17,4 @@ See [here](https://www.mirantis.com/blog/multi-kubernetes-kdc-quick-and-dirty-gu
 3. Set up prometheus (relevant files in prometheus/):
    - https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/ (skip creating 'monitoring' namespace since already done in step 1)
 
+<img src="https://github.com/meeramurali/Custom-Kubernetes-Scheduler/blob/master/images/2.png" height="75"/>
