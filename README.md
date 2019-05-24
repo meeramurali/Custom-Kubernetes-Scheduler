@@ -12,6 +12,6 @@ See [here](https://www.mirantis.com/blog/multi-kubernetes-kdc-quick-and-dirty-gu
 2. Set up node-exporter on all nodes using a DaemonSet: 
    - kubectl create -f node-exporter/node-exporter-daemonset.yml
    - Verify with: kubectl get pods -n monitoring (Must show 1 node-exporter pod per node)
-3. Set up prometheus (Relevant files in prometheus/) 
+3. Set up prometheus (relevant files in prometheus/):
    - https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/ (skip creating 'monitoring' namespace since already done in step 1)
 
