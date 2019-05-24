@@ -34,6 +34,8 @@ See "Using Kubectl Port Forwarding" instructions [here](https://devopscube.com/s
 ## Run annotator
 kubectl proxy (in a separate terminal)
 
+kubectl port-forward [your-prometheus-pod-name] 8080:9090 -n monitoring (in a separate terminal)
+
 go run annotator/main.go
 
 
