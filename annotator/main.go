@@ -32,6 +32,13 @@ func main() {
 	flag.BoolVar(&listOnly, "l", false, "List current annotations and exist")
 	flag.Parse()
 
+	resp_metric, err_metric := http.Get("http://localhost:8080/api/v1/query?query=node_memory_MemTotal")
+    fmt.Println(resp_metric)
+	if err_metric != nil {
+		fmt.Println(err_metric)
+		os.Exit(1)
+	}
+
 	prices := []string{"0.05", "0.10", "0.20", "0.40", "0.80", "1.60"}
 	resp, err := http.Get("http://127.0.0.1:8001/api/v1/nodes")
 	if err != nil {
