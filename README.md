@@ -4,7 +4,7 @@
 1. chmod +x DIND_cluster/dind-cluster-v1.13.sh
 2. sudo DIND_cluster/./dind-cluster-v1.13.sh up
 
-See (https://www.mirantis.com/blog/multi-kubernetes-kdc-quick-and-dirty-guide/) for more detailed instructions
+See (https://www.mirantis.com/blog/multi-kubernetes-kdc-quick-and-dirty-guide/) for detailed instructions
 
 ## Setting up Prometheus with node-exporter On Kubernetes Cluster: 
 1. Create ‘monitoring’ namespace:
