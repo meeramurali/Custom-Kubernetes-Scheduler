@@ -1,7 +1,11 @@
 # Custom-Kubernetes-Scheduler
 
-## Setting up Prometheus with node-exporter On Kubernetes Cluster: 
+## Setting up a multi-node cluster on a single machine by deploying nodes as Docker containers
+1. chmod +x DIND_cluster/dind-cluster-v1.13.sh
+2. sudo DIND_cluster/./dind-cluster-v1.13.sh up
+See (https://www.mirantis.com/blog/multi-kubernetes-kdc-quick-and-dirty-guide/) for more detailed instructions
 
+## Setting up Prometheus with node-exporter On Kubernetes Cluster: 
 1. Create ‘monitoring’ namespace:
    - kubectl create namespace monitoring
 2. Set up node-exporter on all nodes using a DaemonSet: 
