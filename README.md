@@ -32,7 +32,10 @@ See [here](https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/) fo
 See "Using Kubectl Port Forwarding" instructions [here](https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/).
 
 ## Run annotator
+kubectl proxy (in a separate terminal)
+
 go run annotator/main.go
+
 
 Original version from https://github.com/kelseyhightower/scheduler/tree/master/annotator. Adds random cost values as annotations to each node. 
 
