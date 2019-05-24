@@ -26,3 +26,10 @@ See [here](https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/) fo
 
 ## Connecting To Prometheus (Web UI)
 See "Using Kubectl Port Forwarding" instructions [here](https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/).
+
+## Run annotator
+go run annotator/main.go
+
+Original version from https://github.com/kelseyhightower/scheduler/tree/master/annotator. Adds random cost values as annotations to each node. 
+
+TO DO: Annotator needs to be modified to use metric data from prometheus instead of random cost values.
