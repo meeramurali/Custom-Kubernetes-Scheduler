@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 )
 
+// Struct for decoded JSON from HTTP response
 type MetricResponse struct {
 	//Status string `json:"status"`
 	Data Data `json:"data"`
@@ -26,6 +27,7 @@ type Result struct {
 }
 
 func main() {
+	// Execute a query over the HTTP API to get the metric node_memory_MemTotal
 	resp, err := http.Get("http://localhost:8080/api/v1/query?query=node_memory_MemTotal")
         //fmt.Println(resp)
 	if err != nil {
@@ -33,17 +35,23 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Decode the JSON body of the HTTP response into a struct
 	var metrics MetricResponse
 	decodeJsonDataToStruct(&metrics, resp)
 	//fmt.Println(metrics)
-	for i:=0; i<3; i++ {
-		fmt.Printf("Node name: %s\n", metrics.Data.Results[i].MetricInfo["kubernetes_pod_name"])
+
+	// Print the metric values
+	for i:=0; i<len(metrics.Data.Results); i++ {
+		fmt.Printf("Node IP: %s\n", metrics.Data.Results[i].MetricInfo["instance"])
+		fmt.Printf("Pod name: %s\n", metrics.Data.Results[i].MetricInfo["kubernetes_pod_name"])
 		fmt.Printf("Time: %f\n", metrics.Data.Results[i].MetricValue[0])
 		fmt.Printf("Value: %s\n\n", metrics.Data.Results[i].MetricValue[1])
 	}
 }
 
 func decodeArbitraryJsonData(resp *http.Response) {
+	// Decode JSON data into an interface (don't need to know the structure of the JSON)
+
 	// Used https://stackoverflow.com/questions/38673673/access-http-response-as-string-in-go to
 	// figured out how to read the bytes from the response body
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
@@ -63,6 +71,7 @@ func decodeArbitraryJsonData(resp *http.Response) {
 }
 
 func decodeJsonDataToStruct(metrics *MetricResponse, resp *http.Response) {
+	// Decode JSON data into a struct to get the metric values
 	decoder := json.NewDecoder(resp.Body)
 	err := decoder.Decode(metrics)
 	if err != nil {
