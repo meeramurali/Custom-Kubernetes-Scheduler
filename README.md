@@ -30,3 +30,13 @@ See [here](https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/) fo
 See "Using Kubectl Port Forwarding" instructions [here](https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/).
 
 kubectl port-forward [your-prometheus-pod-name] 8080:9090 -n monitoring
+
+## Running and testing the Custom Scheduler
+1. Open 3 terminals
+2. Terminal 1: kubectl proxy
+3. Terminal 2: 
+   - go build . (from within the scheduler/ folder)
+   - ./scheduler.
+4. Terminal 3: 
+   - kubectl create -f deployments/nginx.yaml 
+   - kubectl get pods -o wide (to see which node its been scheduled on; should be the 'best node' identified by the custom scheduler. See logs in Terminal 2 to verify)
