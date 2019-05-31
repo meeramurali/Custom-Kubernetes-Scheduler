@@ -26,7 +26,7 @@ type Result struct {
 
 // Returns the name of the node with the best metric value
 func getBestNodeName() (string, error) {
-	// Execute a query over the HTTP API to get the metric node_memory_MemTotal
+	// Execute a query over the HTTP API to get the metric node_memory_MemAvailable
 	resp, err := http.Get("http://localhost:8080/api/v1/query?query=node_memory_MemAvailable")
 	if err != nil {
 		fmt.Println(err)
