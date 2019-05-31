@@ -98,6 +98,11 @@ data:
         - source_labels: [__meta_kubernetes_pod_name]
           action: replace
           target_label: kubernetes_pod_name
+          # Mapping to instance to be the node name instead of the IP address
+          # Idea from: https://github.com/coreos/prometheus-operator/issues/135
+        - source_labels: [__meta_kubernetes_pod_node_name] 
+          action: replace
+          target_label: instance
 
       - job_name: 'kubernetes-cadvisor'
 
