@@ -68,12 +68,3 @@ func decodeJsonDataToStruct(metrics *MetricResponse, resp *http.Response) {
 		os.Exit(1)
 	}
 }
-
-func main() {
-	name, err := getBestNodeName()
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Printf("Best node: %s\n", name)
-}
-
