@@ -1,0 +1,21 @@
+#Modifed from  https://hub.docker.com/r/severalnines/sysbench/
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: sysbench
+  name: sysbench
+spec:
+  containers:
+  - command:
+    - sysbench
+    - --test=memory
+    - --memory-block-size=2G 
+    - --memory-total-size=5T
+    - --memory-oper=read
+    - --memory-access-mode=rnd
+    - --num-threads=10
+    - run
+    image: severalnines/sysbench
+    name: sysbench
+  restartPolicy: Never
