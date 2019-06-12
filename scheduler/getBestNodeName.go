@@ -6,6 +6,7 @@ import (
 	"os"
 	"encoding/json"
 	"strconv"
+	"errors"
 )
 
 // Struct for decoded JSON from HTTP response
@@ -25,7 +26,12 @@ type Result struct {
 }
 
 // Returns the name of the node with the best metric value
-func getBestNodeName() (string, error) {
+func getBestNodeName(nodes []Node) (string, error) {
+	var nodeNames []string
+	for _, n := range nodes {
+		nodeNames = append(nodeNames, n.Metadata.Name)
+	}
+
 	// Execute a query over the HTTP API to get the metric node_memory_MemAvailable
 	resp, err := http.Get("http://localhost:8080/api/v1/query?query=node_memory_MemAvailable")
 	if err != nil {
@@ -37,27 +43,47 @@ func getBestNodeName() (string, error) {
 	var metrics MetricResponse
 	decodeJsonDataToStruct(&metrics, resp)
 
-        // Iterate through the nodes to find the best value
-	max, err := strconv.Atoi(metrics.Data.Results[0].MetricValue[1].(string))
-	bestNode := metrics.Data.Results[0].MetricInfo["instance"]
-	for i:=0; i<len(metrics.Data.Results); i++ {
-		// Print metric value for each node
-		fmt.Printf("Node name: %s\n", metrics.Data.Results[i].MetricInfo["instance"])
-		fmt.Printf("Value: %s\n\n", metrics.Data.Results[i].MetricValue[1])
 
-		metricValue, err := strconv.Atoi(metrics.Data.Results[i].MetricValue[1].(string))
-		// To-do: figure out if more error handling is needed
+        // Iterate through the metric results to find the node with the best value
+	max := 0
+	bestNode := ""
+	for _, m := range metrics.Data.Results {
+		// Print metric value for the node
+		fmt.Printf("Node name: %s\n", m.MetricInfo["instance"])
+		fmt.Printf("Value: %s\n\n", m.MetricValue[1])
+
+		// Convert string in metric results to an integer
+		metricValue, err := strconv.Atoi(m.MetricValue[1].(string))
 		if err != nil {
-			break
+			return "", err
 		}
 
 		if metricValue > max {
-			max = metricValue
-			bestNode = metrics.Data.Results[i].MetricInfo["instance"]
+			// Check if the node is in the list passed in (nodes the pod will fit on)
+			available := nodeAvailable(nodeNames, m.MetricInfo["instance"])
+			if available == true {
+				max = metricValue
+				bestNode = m.MetricInfo["instance"]
+			}
 		}
 	}
-	return bestNode, nil
+	if bestNode == "" {
+		return "", errors.New("No node found")
+	} else {
+		return bestNode, nil
+	}
 }
+
+
+func nodeAvailable(nodeNames []string, name string) (result bool) {
+	for _, n := range nodeNames {
+		if name == n {
+			return true
+		}
+	}
+	return false
+}
+
 
 // Decode JSON data into a struct to get the metric values
 func decodeJsonDataToStruct(metrics *MetricResponse, resp *http.Response) {
@@ -68,3 +94,4 @@ func decodeJsonDataToStruct(metrics *MetricResponse, resp *http.Response) {
 		os.Exit(1)
 	}
 }
+

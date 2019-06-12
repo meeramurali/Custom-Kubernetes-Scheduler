@@ -6,7 +6,7 @@ import (
 
 func getBestNode(nodes []Node) (Node, error) {
     // Get name of best node per metrics
-    bestNodeName, err := getBestNodeName()
+    bestNodeName, err := getBestNodeName(nodes)
     fmt.Printf("Best Node Name: %s\n", bestNodeName)
     if err != nil {
 		return Node{}, err
