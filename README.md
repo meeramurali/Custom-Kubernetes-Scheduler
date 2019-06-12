@@ -1,4 +1,5 @@
 # Custom-Kubernetes-Scheduler
+A custom scheduler for kubernetes that tries to optimize memory usage across nodes. For each unscheduled pod, a compatible node (that meets the pod's CPU and memory requests) with the maximum available memory is selected. 
 
 ## Setting up a multi-node cluster on a single machine by deploying nodes as Docker containers
 1. cd DIND_cluster/
