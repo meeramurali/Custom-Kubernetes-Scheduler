@@ -38,5 +38,5 @@ kubectl port-forward [your-prometheus-pod-name] 8080:9090 -n monitoring
    - go build . (from within the scheduler/ folder)
    - ./scheduler.
 4. Terminal 3: 
-   - kubectl create -f deployments/nginx.yaml 
+   - kubectl create -f deployments/testcustom.yaml 
    - kubectl get pods -o wide (to see which node its been scheduled on; should be the 'best node' identified by the custom scheduler. See logs in Terminal 2 to verify)
