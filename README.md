@@ -1,4 +1,7 @@
 # Custom-Kubernetes-Scheduler
+A custom scheduler for kubernetes that tries to optimize memory usage across nodes. For each unscheduled pod, a compatible node (that meets the pod's CPU and memory requests) with the maximum available memory is selected. 
+
+This project was guided by Kelsey Hightower’s [demo](https://www.youtube.com/watch?v=IYcL0Un1io0) for building a custom Kubernetes scheduler. Hightower demonstrates building a toy scheduler that schedules based on some manually added random annotations (each node is annotated with some random cost; and the scheduler picks the node with the least annotation value). We have used parts of his [source code](https://github.com/kelseyhightower/scheduler) as the base for our scheduler, specifically, the components for monitoring and finding unscheduled pods, running the default predicate checks to find nodes that satisfy the pods’ requested CPU and memory requirements, and binding the pods to the selected nodes. 
 
 ## Setting up a multi-node cluster on a single machine by deploying nodes as Docker containers
 1. cd DIND_cluster/
@@ -40,7 +43,5 @@ kubectl port-forward [your-prometheus-pod-name] 8080:9090 -n monitoring
 4. Terminal 3: 
    - kubectl create -f deployments/testcustom.yaml 
    - kubectl get pods -o wide (to see which node its been scheduled on; should be the 'best node' identified by the custom scheduler. See logs in Terminal 2 to verify)
-   
-##
-This project was guided by Kelsey Hightower’s [demo](https://www.youtube.com/watch?v=IYcL0Un1io0) for building a custom Kubernetes scheduler. Hightower demonstrates building a toy scheduler that schedules based on some manually added random annotations (each node is annotated with some random cost; and the scheduler picks the node with the least annotation value). We have used parts of his [source code](https://github.com/kelseyhightower/scheduler) as the base for our scheduler, specifically, the components for monitoring and finding unscheduled pods, running the default predicate checks to find nodes that satisfy the pods’ requested CPU and memory requirements, and binding the pods to the selected nodes. 
+  
 
